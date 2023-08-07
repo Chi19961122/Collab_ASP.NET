@@ -1,0 +1,410 @@
+﻿html,
+body,
+div {
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+
+body {
+    overflow-x: hidden;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+/* * {
+    border: 1px solid black;
+} */
+
+/* ------navbar-------------------------- */
+.navbar {
+    width: 100%;
+    height: 120px;
+    display: flex;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    /* background-color: rgb(230, 229, 229); */
+    z-index: 999;
+}
+
+.container {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo {
+    margin-left: 3%;
+    width: 250px;
+    height: auto;
+}
+
+.navBtns {
+    width: auto;
+    display: flex;
+    align-items: center;
+    margin-right: 3%;
+}
+
+.btn-logIn {
+    color: white;
+    background-color: #0095c6;
+    box-shadow: 0px 5px 15px #67cdef;
+    font-size: 30px;
+    font-weight: 600;
+    border-radius: 10px 10px 10px 10px;
+    padding: 8px 18px 8px 18px;
+    border: none;
+    cursor: pointer;
+}
+
+    .btn-logIn:hover {
+        color: white;
+        background-color: #0095c6;
+        font-size: 30px;
+        border-radius: 10px 10px 10px 10px;
+        padding: 8px 18px 8px 18px;
+        border: none;
+        box-shadow: 0px 5px 20px #67cdef;
+        cursor: pointer;
+        margin-bottom: 10px;
+    }
+
+.btn-signUp {
+    color: #0095c6;
+    font-size: 30px;
+    font-weight: 600;
+    background-color: white;
+    box-shadow: 0px 5px 20px rgb(183, 183, 183);
+    border-radius: 10px 10px 10px 10px;
+    padding: 8px 18px 8px 18px;
+    border: none;
+    cursor: pointer;
+    margin-left: 20px;
+}
+
+    .btn-signUp:hover {
+        color: #0095c6;
+        font-size: 30px;
+        border-radius: 10px 10px 10px 10px;
+        padding: 8px 18px 8px 18px;
+        border: none;
+        background-color: white;
+        box-shadow: 0px 5px 20px rgb(183, 183, 183);
+        cursor: pointer;
+        margin-bottom: 10px;
+    }
+
+/* -----section 1 -------------------------- */
+.section1 {
+    margin-top: 10%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    /* background-color: rgb(243, 244, 244); */
+}
+
+.content-left {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40%;
+}
+
+.section1 .intro1 {
+    position: absolute;
+    margin-left: 6%;
+}
+
+.intro1 > h1 {
+    font-size: 60px;
+}
+
+.intro1 > p {
+    font-size: 29px;
+    line-height: 2;
+    margin-bottom: 80px;
+}
+
+.btn-start {
+    color: white;
+    font-size: 40px;
+    background-color: #0095c6;
+    border-radius: 10px 10px 10px 10px;
+    padding: 8px 18px 8px 18px;
+    border: none;
+    cursor: pointer;
+}
+
+    .btn-start:hover {
+        color: white;
+        font-size: 30px;
+        font-size: 40px;
+        background-color: #0095c6;
+        box-shadow: 0px 0px 20px #67cdef;
+        border-radius: 10px 10px 10px 10px;
+        padding: 8px 18px 8px 18px;
+        border: none;
+        cursor: pointer;
+    }
+
+.content-right {
+    height: auto;
+    width: auto;
+    margin-left: 100px;
+}
+
+.bc-color1 {
+    position: absolute;
+    z-index: -100;
+    top: -12%;
+    left: 55%;
+    width: 1100px;
+    height: 1000px;
+    background: linear-gradient(to right, rgb(133, 216, 255), rgb(233, 253, 229));
+    border-radius: 73% 27% 44% 56% / 41% 30% 70% 59%;
+    box-shadow: 0px 10px 50px rgba(187, 187, 187, 0.76);
+}
+
+/* -----section 2 -------------------------- */
+.section2 {
+    margin-top: 10%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    height: 800px;
+    /* background-color: rgb(248, 245, 245); */
+}
+
+.img1 {
+    width: 400px;
+    position: absolute;
+    left: 70px;
+    top: 190px;
+    box-shadow: 10px 10px 30px rgb(176, 175, 175);
+    border-radius: 20px 20px 20px 20px;
+}
+
+.img2 {
+    width: 500px;
+    position: absolute;
+    left: 100px;
+    top: 380px;
+    box-shadow: 10px 10px 30px rgb(176, 175, 175);
+    border-radius: 20px 20px 20px 20px;
+}
+
+.img3 {
+    width: 600px;
+    position: absolute;
+    left: 490px;
+    top: 120px;
+    box-shadow: 10px 10px 30px rgb(176, 175, 175);
+    border-radius: 20px 20px 20px 20px;
+    z-index: 1;
+}
+
+.img4 {
+    width: 420px;
+    position: absolute;
+    left: 640px;
+    top: 440px;
+    box-shadow: 10px 10px 30px rgb(176, 175, 175);
+    border-radius: 20px 20px 20px 20px;
+}
+
+.section2 .intro2 {
+    width: 33%;
+    font-size: 25px;
+    line-height: 2;
+    margin-left: 58%;
+}
+
+
+.bc-color2 {
+    position: absolute;
+    z-index: -100;
+    width: 95%;
+    height: 800px;
+    background: linear-gradient(to bottom, #d7fefe, rgb(235,255,255));
+    /* background-color: rgb(240, 248, 255); */
+    box-shadow: 10px 10px 50px rgba(187, 187, 187, 0.76);
+    border-radius: 50px 50px 50px 50px;
+}
+
+/* -----section 3 -------------------------- */
+.section3 {
+    margin-top: 5%;
+    /* display: flex;
+    align-items: center; */
+    /* justify-content: center; */
+    position: relative;
+    height: 1200px;
+}
+
+.bc-color3a {
+    position: absolute;
+    z-index: -100;
+    width: 900px;
+    height: 450px;
+    top: 10%;
+    left: 3%;
+    background: linear-gradient(to right, rgb(247, 226, 252), rgb(248, 251, 253));
+    box-shadow: -10px 10px 50px rgb(187, 187, 187, 0.76);
+    border-radius:20px 20px 20px 20px;
+}
+
+.bc-color3b {
+    position: absolute;
+    z-index: -100;
+    width: 750px;
+    height: 450px;
+    top: 65%;
+    right: 3%;
+    background: linear-gradient(to right, rgb(248, 251, 253), rgb(214, 215, 254));
+    box-shadow: 10px 10px 50px rgba(187, 187, 187, 0.76);
+    border-radius: 20px 20px 20px 20px;
+}
+
+.intro3-Img {
+    position: relative;
+}
+
+/* .intro3-Img img {
+    opacity: 0;
+} */
+
+/* 定義動畫 */
+/* @keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+} */
+
+.intro3-Img1 {
+    position: absolute;
+    top: 60px;
+    left: 6%;
+    border-radius: 20px 20px 20px 20px;
+    height: 450px;
+}
+
+.intro3-Img2 {
+    position: absolute;
+    top: 720px;
+    right: 6%;
+    border-radius: 20px 20px 20px 20px;
+    height: 450px;
+}
+
+.intro3-1 {
+    position: absolute;
+    top: 150px;
+    right: 6%;
+    font-size: 27px;
+    width: 35%;
+}
+
+.intro3-2 {
+    position: absolute;
+    top: 800px;
+    left: 8%;
+    font-size: 27px;
+    width: 35%;
+}
+
+/* -----section 4 -------------------------- */
+.section4 {
+    margin-top: 8%;
+    height: 800px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.intro4 {
+    width: 40%;
+    position:absolute;
+    right: 140px;
+}
+
+.intro4 h1 {
+    font-size: 60px;
+}
+
+.intro4 p {
+    font-size: 32px;
+}
+
+.intro4 .btn-start {
+    margin-top: 10%;
+    font-size: 40px;
+}
+
+.img5 {
+    width: 1000px;
+    height: auto;
+    position:absolute;
+    left:0;
+}
+
+.bc-color4 {
+    position: absolute;
+    z-index: -100;
+    width: 95%;
+    height: 700px;
+    background: linear-gradient(to bottom, rgb(255,255,224), rgb(255, 255, 255));
+    /* background-color: rgb(240, 248, 255); */
+    box-shadow: 10px 10px 50px rgba(187, 187, 187, 0.76);
+    border-radius: 50px 50px 50px 50px;
+}
+
+
+/* ------footer------------------------------- */
+.bc-color5 {
+    position: absolute;
+    z-index: -100;
+    width: 100%;
+    height: 250px;
+    background: linear-gradient(to bottom, rgb(133, 216, 255), rgb(251, 248, 216));
+    border-radius: 31% 69% 70% 30% / 100% 100% 0% 0%;
+    box-shadow: 0px 10px 50px rgba(208, 208, 208, 0.757);
+}
+
+.footer {
+    margin-top: 5%;
+    font-size: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* height: 200px; */
+    /* background-color: rgb(46, 101, 172); */
+    color: black;
+    position: relative;
+}
+
+
+    .footer p {
+        margin-top: 5%;
+    }
+
+
+/* scroll down*/
+.reveal {
+    position: relative;
+    transform: translateY(150px);
+    opacity: 0;
+    transition: all 1s ease;
+}
+
+    .reveal.active {
+        transform: translateY(0px);
+        opacity: 1;
+    }

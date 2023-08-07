@@ -1,0 +1,220 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+}
+<script>
+    // alert視窗
+    function htmlDecode(input) {
+        var doc = new DOMParser().parseFromString(input, "text/html");
+        return doc.documentElement.textContent;
+    }
+    var message = '@Html.Raw(TempData["Message"])';
+    if (message) {
+        alert(htmlDecode(message));
+    }
+</script>
+
+        <div class="Mycontainer  d-flex my-5  " style="display: grid;">
+            <!--------計劃概述------>
+            <div class="col-5 me-5 d-flex flex-column justify-content-between">
+                <form asp-action="UpdateProgramOverview" id="formProjectTextarea" method="post">
+                    <div class="d-flex ">
+                        <p class="MyTitle fs-3 ms-3">計劃概述</p>
+                        <!-- <button id="btnEditTextarea" class="btn-start mb-2 margin-editbtn">編輯</button> -->
+                <button type="button" id="btnEditTextarea" class="icon-addTarget margin-editbtn  addIcon border-0" style="background-color:#f9f7f1">
+                        <i id="iconeditTextarea" class="fa-regular fa-pen-to-square fa-xl"></i>
+                    </button>
+                <button type="submit" id="btnSaveTextarea" class="icon-addTarget addIcon border-0" style="background-color:#f9f7f1">
+                        <i id="iconSaveTextarea" class="fa-regular fa-floppy-disk fa-xl" style="display: none;"></i>
+                    </button>
+                    </div>
+                    <div class="headerBody ProjectGeneralItem" style="height:88%">
+                <textarea id="ProjectTextarea" class="pe-4 lh-lg " name="newOverview" cols="50" rows="17"
+                          readonly style="height:100%"></textarea>
+                    </div>
+                </form>
+            </div>
+            <!--------計劃概述END------>
+            <!-- 參與成員+資料連結 -->
+            <div class="col-6 ms-3 d-flex flex-column justify-content-between" >
+
+                <!--------參與成員------>
+                <div class="col-11">
+                    <div class="d-flex ms-3">
+                        <p class="MyTitle fs-3 ">參與成員</p>
+                        <a id="DeleteMember" class="icon-addTarget margin-delete">
+                            <i class="fa-sharp fa-solid fa-user-xmark fa-xl"></i>
+                        </a>
+                    </div>
+                    <div class="ProjectGeneralItem headerBody pt-4 pb-4 ps-4 d-flex flex-wrap  ">
+                        <div class=" me-5 mt-3 text-center ">
+                            <a class="Myavatar AddNewBtn" id="addMemberButton">
+                                <i class="fa-solid fa-plus fa-xl"></i>
+                            </a>
+                            <p class="mt-3 fs-5">新增成員</p>
+                        </div>
+                        <!-- 一個人 -->
+                        @foreach (var member in ViewBag.Members) {
+                            <div class="me-5 mt-3 text-center " >
+                                <div class="Myavatar">
+                                    <img src="@member.PhotoUrl" alt="" class="">
+                                </div>
+                                <p class="mt-3 fs-5">@member.Name</p>
+                            </div>
+                        }
+                        <!-- 一個人END -->
+                    </div>
+                </div>
+
+                <!--------參與成員END------>
+                <!--------資料連結------>
+                <div class="mt-5 mb-5 col-11">
+                    <div class="d-flex ms-3">
+                        <p class="MyTitle fs-3">資料連結</p>
+                        <!-- <button class="btn-start mb-2  margin-delete">新增</button> -->
+                <a id="btnAddLink" class="icon-addTarget margin-btnAddLink" href="#">
+                            <i class="fa-regular fa-square-plus fa-xl"></i>
+                        </a>
+                    </div>
+                    <div class="ProjectGeneralItem headerBody pb-4 ">
+                        <div id="divAddLink" class="m-3" style="display: none;">
+                            <form asp-action="AddLink" method="post" id="formAddLink">
+                        <input class="addNameInput me-3" type="text" placeholder="名稱" name="LinkTitle" onfocus="this.placeholder = ''" onblur="this.placeholder = '名稱'">
+                                <input class="addInput" type="text" placeholder="URL" name="LinkUrl" onfocus="this.placeholder = ''" onblur="this.placeholder = 'URL'">
+                                <a id="btnSaveLink" class="icon-addTarget margin-btnSaveLink " href="#">
+                                    <i class="fa-regular fa-floppy-disk fa-xl"></i>
+                                </a>
+                            </form>
+                        </div>
+                        <!-- linkList -->
+                        <div class=" me-2 mb-3 pe-2 ms-4">
+                            <div class="scrollableLinkDiv mb-4 mt-3">
+                                <!-- linkRow -->
+                                @foreach (var link in ViewBag.Links) {
+                                    <div class="linkList mt-4 me-5">
+                                        <a class="linkRow me-3" href="@link.LinkUrl">@link.LinkTitle</a>
+                                        <div class="linkDelete ">
+                                            <form asp-action="DeleteLink" asp-route-linkId="@link.LinkId" method="post">
+                                        <button type="submit" class="icon-addTarget me-4 ms-5 addIcon border-0" style="background-color: transparent;">
+                                                    <i class="fa-solid fa-trash fa-lg"></i>
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                }
+                                <!-- linkRow END -->
+                            </div>
+                        </div>
+                        <!-- linkList END -->
+                    </div>
+                </div>
+            </div>
+            <!--------資料連結END------>
+        </div>
+
+
+<dialog id="infoModal">
+    <form asp-action="AddMember" method="post" class="mx-3 my-3">
+        <input type="text" class="addInput" name="memberAccount" placeholder="輸入成員帳號">
+        <button type="submit" class="fs-5 ms-4 my-4 btnSave">添加成員</button>
+        <button type="button" id="cancelButton" class="fs-5 btn-close position-absolute top-0 end-0"></button>
+    </form>
+</dialog>
+
+<dialog id="infoModalDelete">
+    <form asp-action="DeleteMember" method="post" class="mx-3 my-3">
+        <input type="text" class="addInput" name="memberAccount" placeholder="輸入成員帳號">
+        <button type="submit" class="fs-5 ms-4 my-4 btnSave">刪除成員</button>
+        <button type="button" id="close" class="fs-5 btn-close position-absolute top-0 end-0"></button>
+    </form>
+</dialog>
+
+<!-- ------------- JS ---------------- -->
+<script>
+    $(document).ready(function () {
+        //新增成員的dialog
+        $("#addMemberButton").click(function () {
+            $("#infoModal")[0].showModal();
+        });
+
+        $("#cancelButton").click(function () {
+            $("#infoModal")[0].close();
+        });
+        //刪除成員的dialog
+        $("#DeleteMember").click(function () {
+            $("#infoModalDelete")[0].showModal();
+        });
+        $("#close").click(function () {
+            $("#infoModalDelete")[0].close();
+        });
+        //Layout的新增計劃dialog
+        $("#btnAddProgram").click(function () {
+            var dialog = document.getElementById('AddProgramDialog');
+            dialog.showModal();
+        });
+        $("#cancelbtn").click(function () {
+            var dialog = document.getElementById('AddProgramDialog');
+            dialog.close();
+        });
+
+    });
+</script>
+
+<!-- ------------- JS end---------------- -->
+
+<!-- ------------- CSS ---------------- -->
+<link rel="stylesheet" href="~/css/ProjectGeneral.css" />
+<!-- ------------- CSS end---------------- -->
+<script>
+
+
+
+    $(document).ready(function () {
+        $("#btnEditTextarea").click(function () {
+            $("#iconeditTextarea").hide();
+            $("#iconSaveTextarea").show();
+
+            // 切換為編輯模式
+            var textarea = $("#ProjectTextarea");
+            textarea.prop("readonly", false);
+            $("#ProjectTextarea").addClass("edit-textarea");
+        });
+
+        $("#btnSaveTextarea").click(function () {
+
+            // 按鈕控制
+            $("#iconSaveTextarea").hide();
+            $("#iconeditTextarea").show();
+
+            // 切換為只讀模式
+            var textarea = $("#ProjectTextarea");
+            textarea.prop("readonly", true);
+            $("#ProjectTextarea").removeClass("edit-textarea");
+            
+        });
+
+
+        var text = `@Html.Raw(ViewBag.ProgramOverview)`;
+        $("#ProjectTextarea").val(text);
+
+
+
+        $("#btnAddLink").click(function () {
+            $(this).hide();
+            $("#divAddLink").show();
+        });
+
+        $("#btnSaveLink").click(function () {
+
+            $("#formAddLink").submit();
+            $("#divAddLink").hide();
+            $("#btnAddLink").show();
+        });
+
+
+    });
+
+
+
+</script>
+

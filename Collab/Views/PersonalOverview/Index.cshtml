@@ -1,0 +1,189 @@
+﻿@using System.Text.Json;
+@{
+	ViewData["Title"] = "Index";
+	var jsonIngMissions = Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.ingmissions);
+}
+
+<!-- css -->
+<link rel="stylesheet" href="~/css/PersonalOverview.css" />
+<!-- js -->
+<script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js'></script>
+<script>
+	localStorage.setItem("bgcolor", "");
+	$(document).ready(function () {
+		//Layout的新增計劃dialog
+		$("#btnAddProgram").click(function () {
+			var dialog = document.getElementById('AddProgramDialog');
+			dialog.showModal();
+		});
+		$("#cancelbtn").click(function () {
+			var dialog = document.getElementById('AddProgramDialog');
+			dialog.close();
+		});
+	});
+	document.addEventListener('DOMContentLoaded', function () {
+		var calendarEl = document.getElementById('calendar');
+		var calendar = new FullCalendar.Calendar(calendarEl, {
+			eventClick: function (info) {
+				alert('test');
+			},
+
+			initialView: 'dayGridMonth',
+			// locale:'zh-tw',
+			navLink: true,
+			headerToolbar: {
+				left: 'prev,next,today',
+				center: 'title',
+			},
+
+			// 注意這裡的 events 不用加分號，直接呼叫 generateEvents() 函式
+			events: generateEvents(),
+
+			eventClick: function (info) {
+				info.jsEvent.preventDefault(); // don't let the browser navigate
+				if (info.event.url) {
+					window.open(info.event.url);
+				}
+			}
+		});
+		calendar.render();
+
+		function generateEvents() {
+			var events = [];
+			var missionElements = document.querySelectorAll('[data-MissionCount]');
+
+			// 使用 forEach 迴圈來處理每個元素
+			missionElements.forEach(function (element) {
+				var missionCount = element.getAttribute('data-MissionCount');
+
+				var eventObj = {
+					title: element.getAttribute('data-MissionName'),
+					start: element.getAttribute('data-MisStartTime'),
+					end: element.getAttribute('data-MisFinishTime'),
+					backgroundColor: element.getAttribute('data-background-color'),
+				};
+
+				// 這裡你可以根據不同的 missionCount 做一些邏輯處理，例如：
+				// if (missionCount === '1') {
+				//     eventObj.someProperty = 'Some Value';
+				// }
+
+				events.push(eventObj);
+			});
+
+			return events;
+		}
+
+	});
+</script>
+
+
+<!-- 從這裡開始寫 -->
+
+<div class="fs-3 missiontitle">任務</div>
+<div class="topcontainer">
+	<div class="column">
+		<div class="missions">未完成</div>
+		<div class="grid-topcontainer">
+			<div class="grid-item">
+				@*<div style="background-color:rgb(241, 193, 96); ">藝起生活寫生派對-刻板</div>*@
+				@{
+
+					var count = 1;
+					bool dataFound = false;
+
+					foreach (var item in ViewBag.ingmissions)
+					{
+						// 檢查是否存在所需資料，例如：MissionName 不為空
+						if (!string.IsNullOrEmpty(item.MissionName))
+						{
+							<div data-MissionCount="@count"
+								 data-MissionName="@item.MissionName"
+								 data-MisStartTime="@item.MisStartTime?.ToString("yyyy-MM-dd")"
+								 data-MisFinishTime="@item.MisFinishTime?.ToString("yyyy-MM-dd")"
+								 data-background-color="@item.ProgramColor"
+								 data-missionid="@item.MissionId"
+								 style="background-color:@item.ProgramColor">
+								@item.MissionName
+							</div>
+							dataFound = true;
+							count++;
+						}
+					}
+
+					// 處理未找到所需資料的情況
+					if (!dataFound)
+					{
+						<div style="background-color: rgb(119, 118, 115);color:white; ">無進行中任務</div>
+					}
+				}
+
+
+
+
+			</div>
+
+		</div>
+
+	</div>
+
+	<div class="column">
+		<div class="missions">已完成</div>
+		<div class="grid-topcontainer">
+			<div class="grid-item">
+				@{
+					bool donedataFound = false;
+					@if (ViewBag.donemissions != null)
+					{
+						@foreach (var item in ViewBag.donemissions)
+						{
+							<div style="background-color: @item.ProgramColor"
+								 data-missionid="@item.MissionId">
+								@item.MissionName
+							</div>
+							donedataFound = true;
+						}
+					}
+
+					if (!donedataFound)
+					{
+						<div style="background-color: rgb(119, 118, 115);color:white;">近一周內無已完成任務</div>
+					}
+
+				}
+			</div>
+
+		</div>
+
+	</div>
+</div>
+
+
+<!-- 行事曆開頭 -->
+<div class="fs-3 calendartitle">行事曆</div>
+
+<!-- 此處新增區塊並加入類別選擇器來方便使用自創的css檔案(MyStyle.css操控月曆的大小) -->
+<div class="container">
+	<div id='calendar'></div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+	$('div[data-missionid]').click(function () {
+		var MissionIdValue = $(this).data('missionid');
+		$.ajax({
+			url: '/Mission/ProcessMission',
+			type: 'POST',
+			data: { missionId: MissionIdValue },
+			success: function (response) {
+				window.location.href = '/Mission/Index';
+			},
+			error: function (xhr, status, error) {
+				console.error('傳遞到後端失敗：', error);
+			}
+		});
+	});
+
+</script>
+
+<!-- 結束 -->

@@ -1,0 +1,397 @@
+﻿@model Collab.Models.Member;
+
+@{
+    ViewData["Title"] = "Index";
+}
+<script>
+localStorage.setItem("bgcolor", "");
+</script>
+<script>
+    $(document).ready(function () {
+        //Layout的新增計劃dialog
+        $("#btnAddProgram").click(function () {
+            var dialog = document.getElementById('AddProgramDialog');
+            dialog.showModal();
+        });
+        $("#cancelbtn").click(function () {
+            var dialog = document.getElementById('AddProgramDialog');
+            dialog.close();
+        });
+    });
+</script>
+<div class="scroller " style="height: 87vh;">
+    <div class="mx-4">
+        <div class=" mx-4">
+            <!-- 從這裡開始寫 -->
+            <div class="Mycontainer">
+                <div class="headerBody pt-4  " style="display: flex;">
+                    <!-- 資料區(左半邊) -->
+                    <div class="containerLeft">
+                        <!-- 大頭貼區 -->
+                        <div class="row gx-4 col-12">
+                            <div class="col-auto ms-4 ">
+                                <div class="avatar MemberAreaImg ImgDiv">
+                                    <a href="#" class="editImgA" id="show">編輯</a>
+                                    <img src="@ViewBag.ProfilePicturePath" alt="頭像">
+                                </div>
+                            </div>
+                            <div class="col-auto my-auto">
+                                <div class="">
+                                    <h5 class="mb-1 fs-1 UserName"> @Model.MemberName</h5>
+                                </div>
+                            </div>
+                            <!-- <div class="col-lg-4 my-sm-auto me-sm-0 mx-auto mt-3" style="display: flex;">
+                                <button id="editBtn" class="Mybtn ms-5" type="button">編輯</button>
+                                <button id="ChangePWDBtn" class="ms-4 Mybtn" type="button">更改密碼</button>
+                            </div> -->
+                        </div>
+                        <!-- 表單區 -->
+                        <div class=" pb-0 mt-5 pt-3 ">
+                            <!-- 基本資料區 -->
+                            <div class="profile">
+                                <div class=" d-flex align-items-center " style="position: relative;">
+                                    <p class="mb-0 ms-3 mt-3 fs-2">基本資料</p>
+                                    <button id="btnEditProfile" class="addIcon border-0  icon-addTarget margin-editbtn" style="background-color:#f9f7f1">
+                                        <i id="iconeditProfile" class="fa-regular fa-pen-to-square fa-xl"></i>
+                                    </button>
+                                    <button id="btnSaveProfile" class="addIcon border-0  icon-addTarget margin-editbtn"
+                                            style=" display: none;background-color:#f9f7f1" >
+                                        <i id="iconSaveProfile" class="fa-regular fa-floppy-disk fa-xl"></i>
+                                    </button>
+                                    <a href="" class="icon-addTarget">
+                                        <i id="iconCancelProfile" class="fa-solid fa-xmark fa-xl ms-3" style="display: none;"></i>
+                                    </a>
+                                </div>
+
+                                <!-- 基本資料-內容區 -->
+                                <form id="editForm" class="col-12 " asp-action="Edit" method="post">
+                                    <div class="col-12 ">
+                                        <div class="mb-4 mt-5 col-12 " style="display: flex;">
+                                            <label for="" class="col-3 form-label ms-3 fs-3">會員名稱</label>
+                                            <input type="text" class="myInput  ms-4  disabled-input" name="MemberName"
+                                                   id="inputName" placeholder="@Model.MemberName" disabled>
+                                        </div>
+                                        <div class="mb-4 pb-4 mt-3 col-12" style="display: flex;">
+                                            <label for="" class=" col-3 form-label ms-3 fs-3">帳號</label>
+
+                                            <input type="text" class="myInput  ms-4  disabled-input"
+                                                   id="inputAccount" placeholder="@Model.MemberAccount"
+                                                   disabled>
+                                            <!-- <div class="ms-3 fs-5 col-8 form-label ms-3  small-input"></div> -->
+                                            <!-- <div id="formGroupExampleInput2" class="col-2 form-control ms-3 p-3 fs-5">
+                                                qqq011334466@gmail.com
+                                            </div> -->
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 更改密碼區(右半邊) -->
+                    <div class="containerRight">
+                        <div id="editPWDForm" class="ChangePWD pb-0 ms-5 ">
+                            <div class="d-flex align-items-center">
+                                <p class=" mb-0 ms-3 mt-3 fs-2">更改密碼</p>
+                                <a id="editPWDBtn" class="icon-addTarget margin-editbtnPWD">
+                                    <i id="iconeditPWD" class="fa-regular fa-pen-to-square fa-xl"></i>
+                                    <i id="iconSavePWD" class="fa-regular fa-floppy-disk fa-xl"
+                                       style="display: none;"></i>
+                                </a>
+                                <a href="" class="icon-addTarget">
+                                    <i id="iconCancelPWD" class="fa-solid fa-xmark fa-xl ms-3"
+                                       style="display: none;"></i>
+                                </a>
+                            </div>
+                            <form id="forminputPWD" class="col-12  mt-3" asp-action="EditPWD" method="post">
+                                <div class="mb-4 pt-4 col-12 pb-4" style="display: flex;">
+                                    <label for="formGroupExampleInput"
+                                           class="col-3 form-label ms-3 fs-3">舊密碼</label>
+                                    <input id="inputOddPWD" type="password"
+                                           class="myInput   ms-4 p-3 fs-5"
+                                            name="OldPassword" placeholder="請輸入舊密碼" disabled>
+                                </div>
+                                <div class="mb-4 col-12 pb-4 " style="display: flex;">
+                                    <label for=" " class="col-3 form-label ms-3 fs-3">新密碼</label>
+                                    <input id="inputNewPWD" type="password"
+                                           class="myInput ms-4 p-3 fs-5"
+                                           name="NewPassword" placeholder="請輸入新密碼" disabled>
+                                </div>
+                                <div class="mb-4 col-12 pb-4" style="display: flex;">
+                                    <label for=" " class="col-3 form-label ms-3 fs-3">確認新密碼</label>
+                                    <input id="inputNewPWD2" type="password"
+                                           class="myInput  ms-4 p-3 fs-5"
+                                           name="ConfirmPassword" placeholder="請再次輸入新密碼" disabled>
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+        <!-- 大頭貼區END -->
+        <!-- 會員資料表單 -->
+
+        <div class="mt-5 mb-5"></div>
+        <!-- 結束 -->
+    </div>
+</div>
+<dialog id="infoModal">
+    <form asp-action="UploadProfilePicture" method="post" enctype="multipart/form-data" >
+        <label for="file" class="fs-2 mt-5 ms-4">選擇一個頭像圖片：</label><br><br>
+        <input type="file" id="upload_img" name="file" accept="image/*" class="fs-5 ms-4"><br><br>
+        <input type="hidden" id="cropped_image" name="cropped_image">
+        <div id="oldImg" style="display:none;"></div>
+        <button type="button" id="crop_img" class="fs-5 mb-5 ms-4 btnSave" style="display:none;">裁剪圖片</button>
+        <button type="button" id="cancelButton" class="fs-5 btn-close position-absolute top-0 end-0"></button>
+        @*<div id="newImgInfo"></div>*@
+        <div id="newImg" class="ms-4 mb-3"></div>
+        <input id="submit" type="submit" value="確定上傳" class="fs-5 mb-5 ms-4 btnSave" style="display:none;">
+    </form>
+</dialog>
+
+<!-- ------------- JS ---------------- -->
+
+<script>
+    let btn = document.querySelector("#show");
+    let infoModal = document.querySelector("#infoModal");
+    btn.addEventListener("click", function () {
+        infoModal.showModal();
+    })
+    document.getElementById('cancelButton').addEventListener('click', function () {
+        document.getElementById('infoModal').close();
+    });
+</script>
+<!-- ------------- JS end---------------- -->
+<script>
+
+    function htmlDecode(input) {
+        var doc = new DOMParser().parseFromString(input, "text/html");
+        return doc.documentElement.textContent;
+    }
+
+
+    $(document).ready(function () {
+
+        var isEditing = false; // 初始編輯狀態為 false
+        var originalText = ""; // 保存原始內容的變數
+
+        $("#btnEditProfile").click(function () {
+            if (!isEditing) {
+                originalText = $("#inputName").val(); // 保存原始內容
+                $("#inputName").prop("disabled", false);
+                $("#btnSaveProfile").show();
+                $("#iconCancelProfile").show();
+                $("#btnEditProfile").hide();
+                isEditing = true;
+            }
+        });
+
+        // 儲存按鈕點擊事件處理
+        $("#btnSaveProfile").click(function () {
+            $("#inputName").prop("disabled", false); // 先啟用輸入欄位
+            var inputText = $("#inputName").val();
+            if (inputText !== "") {
+                $("#inputName").prop("placeholder", inputText);
+            }
+            originalText = inputText;
+            $("#editForm").submit();
+            $("#btnEditProfile").show();
+            $("#btnSaveProfile").hide();
+            $("#iconCancelProfile").hide();
+            isEditing = false;
+        });
+
+        // 取消按鈕點擊事件處理
+        $("#iconCancelProfile").click(function () {
+            $("#inputName").val(originalText); // 恢復原始內容
+            $("#inputName").prop("disabled", true);
+            $("#inputAccount").addClass("disabled-input");
+            $("#btnEditProfile").show();
+            $("#btnSaveProfile").hide();
+            $("#iconCancelProfile").hide();
+            isEditing = false;
+        });
+
+        //------更改密碼區操作-----
+        var isEditingPwd = false; // 初始編輯密碼狀態為 false
+        var originalPwd = ""; // 保存原始密碼的變數
+
+        $("#editPWDBtn").click(function () {
+            if (!isEditingPwd) {
+                originalPwd = $("#inputOddPWD").val(); // 保存原始密碼
+                $("#inputOddPWD, #inputNewPWD, #inputNewPWD2").prop("disabled", false);
+                $("#iconSavePWD").show();
+                $("#iconCancelPWD").show();
+                $("#iconeditPWD").hide();
+                isEditingPwd = true;
+            }
+        });
+
+        // 儲存密碼按鈕點擊事件處理
+        $("#iconSavePWD").click(function (event) {
+            var inputOddPWD = $("#inputOddPWD").val();
+            var inputNewPWD = $("#inputNewPWD").val();
+            var inputNewPWD2 = $("#inputNewPWD2").val();
+            if (inputNewPWD !== inputNewPWD2) {
+                alert("新密碼和確認新密碼不相同，請重新輸入");
+                event.preventDefault(); // 阻止表單提交
+            } else {
+                $("#inputOddPWD, #inputNewPWD, #inputNewPWD2").prop("disabled", false); // 先啟用輸入欄位
+                if (inputNewPWD !== "") {
+                    $("#inputNewPWD, #inputNewPWD2").prop("placeholder", inputNewPWD);
+                }
+                originalPwd = inputNewPWD;
+                $("#forminputPWD").submit();
+                $("#iconeditPWD").show();
+                $("#iconSavePWD").hide();
+                $("#iconCancelPWD").hide();
+                $("#inputOddPWD, #inputNewPWD, #inputNewPWD2").prop("disabled", true); // 再次禁用輸入欄位
+                isEditingPwd = false;
+            }
+        });
+        ;
+
+        // 取消密碼按鈕點擊事件處理
+        $("#iconCancelPWD").click(function () {
+            $("#inputOddPWD").val(originalPwd); // 恢復原始密碼
+            $("#inputOddPWD, #inputNewPWD, #inputNewPWD2").prop("disabled", true);
+            $("#iconeditPWD").show();
+            $("#iconSavePWD").hide();
+            $("#iconCancelPWD").hide();
+            isEditingPwd = false;
+        });
+
+
+        // alert視窗
+        var message = '@Html.Raw(TempData["Message"])';
+        if (message) {
+            alert(htmlDecode(message));
+        }
+
+
+    });
+
+</script>
+<!-- ------------- CSS ---------------- -->
+<link rel="stylesheet" href="~/css/MemberArea.css" />
+
+<!-- ------------- cropper js ---------------- -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.css" rel="stylesheet">
+<script>
+    (function ($) {
+        var width_crop = 300, // 圖片裁切寬度 px 值
+            height_crop = 300, // 圖片裁切高度 px 值
+            type_crop = "circle", // 裁切形狀: square 為方形, circle 為圓形
+            width_preview = 500, // 預覽區塊寬度 px 值
+            height_preview = 500, // 預覽區塊高度 px 值
+            compress_ratio = 0.85, // 圖片壓縮比例 0~1
+            type_img = "jpeg", // 圖檔格式 jpeg png webp
+            oldImg = new Image(),
+            myCrop, file, oldImgDataUrl;
+
+        // 裁切初始參數設定
+        myCrop = $("#oldImg").croppie({
+            viewport: { // 裁切區塊
+                width: width_crop,
+                height: height_crop,
+                type: type_crop
+            },
+            boundary: { // 預覽區塊
+                width: width_preview,
+                height: height_preview
+            }
+        });
+
+        $("#crop_img").on("click", function () {
+            myCrop.croppie("result", {
+                type: "canvas",
+                format: type_img,
+                quality: compress_ratio
+            }).then(function (src) {
+                displayCropImg(src);
+                displayNewImgInfo(src);
+                // 將裁剪後的圖片數據設置為隱藏輸入字段的值
+                $("#cropped_image").val(src);
+            });
+        });
+
+        function readFile(input) {
+            if (input.files && input.files[0]) {
+                file = input.files[0];
+            } else {
+                alert("瀏覽器不支援此功能！建議使用最新版本 Chrome");
+                return;
+            }
+
+            if (file.type.indexOf("image") == 0) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    oldImgDataUrl = e.target.result;
+                    oldImg.src = oldImgDataUrl; // 載入 oldImg 取得圖片資訊
+                    myCrop.croppie("bind", {
+                        url: oldImgDataUrl
+                    });
+                };
+
+                reader.readAsDataURL(file);
+            } else {
+                alert("您上傳的不是圖檔！");
+            }
+        }
+
+        function displayCropImg(src) {
+            var html = "<img src='" + src + "' />";
+            $("#newImg").html(html);
+        }
+
+        $("#upload_img").on("change", function () {
+            // 當用戶選擇一個文件時，顯示 "裁剪圖片" 按鈕
+            if (this.files && this.files[0]) {
+                $("#crop_img").show();
+            }
+
+            $("#oldImg").show();
+            readFile(this);
+        });
+
+        oldImg.onload = function () {
+            var width = this.width,
+                height = this.height,
+                fileSize = Math.round(file.size / 1000),
+                html = "";
+
+            //html += "<p>原始圖片尺寸 " + width + "x" + height + "</p>";
+            //html += "<p>檔案大小約 " + fileSize + "k</p>";
+            //$("#oldImg").before(html);
+        };
+
+        function displayNewImgInfo(src) {
+            var html = "",
+                filesize = src.length * 0.75;
+
+            html += "<p>裁切圖片尺寸 " + width_crop + "x" + height_crop + "</p>";
+            html += "<p>檔案大小約 " + Math.round(filesize / 1000) + "k</p>";
+            $("#newImgInfo").html(html);
+        }
+
+        $("#crop_img").on("click", function () {
+            // 當用戶點擊 "裁剪圖片" 按鈕時，顯示 "確定上傳" 按鈕
+            $("#submit").show();
+
+            myCrop.croppie("result", {
+                type: "canvas",
+                format: type_img,
+                quality: compress_ratio
+            }).then(function (src) {
+                displayCropImg(src);
+                displayNewImgInfo(src);
+            });
+        });
+    })(jQuery);
+</script>
+<!-- ------------- cropper js END---------------- -->

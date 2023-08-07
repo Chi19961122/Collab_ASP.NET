@@ -1,0 +1,84 @@
+﻿@{
+    ViewData["Title"] = "Index";
+    Layout = null;
+}
+@{
+    var optionsList = ViewBag.option as List<string>;
+}
+<script src="~/js/site.js" asp-append-version="true"></script>
+
+<!-- 計劃標題 -->
+<h1 class="projectNameTitle"></h1>
+<input type="text" id="missionId" style="display:none" />
+<!-- 編輯內容 -->
+<!-- 任務名稱 -->
+<div class="taskName">
+    <label for="taskName">任務：</label>
+    <input type="text" id="missionName" placeholder="">
+</div>
+<!-- 指派人員 -->
+<div class="member">
+    <label for="personnel" class="col-form-label">人員：</label>
+    <select id="memberStatus">
+        <option value="" selected disabled>請選擇</option>
+        @if (ViewBag.membersInProgram != null) {
+            @foreach (var item in ViewBag.membersInProgram) {
+                <option value="@item.MemberId">@item.MemberAccount</option>
+            }
+        }
+    </select>
+</div>
+<!-- 開始日 -->
+<div class="startDate">
+    <label for="startDate">開始日：</label>
+    <input id="startDate" type="date" class="calendar">
+</div>
+<!-- 截止日 -->
+<div class="endDate">
+    <label for="endDate">截止日：</label>
+    <input id="endDate" type="date" class="calendar">
+</div>
+<!-- 狀態 -->
+<div class="status">
+    <label for="status">狀態：</label>
+    <div class="btn-group-toggle" data-toggle="buttons">
+        <label class="btn btn-secondary btn-lg">
+            <input type="radio" name="status" value="新任務"> 新任務
+        </label>&nbsp;&nbsp;
+        <label class="btn btn-secondary btn-lg">
+            <input type="radio" name="status" value="進行中"> 進行中
+        </label>&nbsp;&nbsp;
+        <label class="btn btn-secondary btn-lg">
+            <input type="radio" name="status" value="已完成"> 已完成
+        </label>
+    </div>
+</div>
+<!-- 目標選單 -->
+<div class="targetSelect">
+    <label for="target">目標：</label>
+    <select id="statusSelect">
+        <option value="" selected disabled>請選擇</option>
+        @if (ViewBag.option != null && ViewBag.option.Count > 0) {
+            @foreach (var option in ViewBag.option) {
+                <option value="@option.IntentId">@option.IntentName</option>
+            }
+        }
+    </select>
+</div>
+<!-- 描述 -->
+<div class="description">
+    <label for="description">描述：</label>
+    <textarea class="form-control" id="description" rows="5" maxlength="200" placeholder="請輸入描述內容"></textarea>
+</div>
+<!-- ------------- JS ---------------- -->
+<script>
+    $(document).ready(function () {
+    var spanName = localStorage.getItem("ProgramName");
+        $(".projectNameTitle").text(spanName);
+
+    })
+</script>
+@*<script src="~/js/missionEdit/JavaScript.js"></script>*@
+<!-- ------------- JS end---------------- -->
+
+<link rel="stylesheet" href="~/css/MissionEdit.css" />
